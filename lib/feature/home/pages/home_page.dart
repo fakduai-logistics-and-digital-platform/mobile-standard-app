@@ -1,5 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_app_standard/domain/repositories/toda_repo.dart';
+import 'package:mobile_app_standard/locator.dart';
+import 'package:mobile_app_standard/router/router.dart';
 
+@RoutePage()
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -13,8 +18,8 @@ class HomePage extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(
-                  context, '/todo'); // ใช้ routes เพื่อไปยัง TodoPage
+              context.router
+                  .push(TodoRoute(todoRepository: locator<TodoRepository>()));
             },
             child: const Text('Go to Todo Page'),
           ),

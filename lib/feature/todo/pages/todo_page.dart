@@ -1,9 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_app_standard/domain/repositories/toda_repo.dart';
 import 'package:mobile_app_standard/feature/todo/bloc/todo_bloc.dart';
 import 'package:mobile_app_standard/feature/todo/widgets/add_todo_dialog.dart';
 
+@RoutePage()
 class TodoPage extends StatelessWidget {
   final TodoRepository todoRepository;
 

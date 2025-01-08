@@ -20,7 +20,7 @@ Future<void> main() async {
   connectWebSocket();
 
   runApp(
-    const MyApp(),
+    MyApp(),
   );
 }
 
@@ -52,19 +52,17 @@ Future<void> connectWebSocket() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  MyApp({super.key});
+  final _appRouter = AppRouter();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      onGenerateRoute:
-          AppRouter().onGenerateRoute, // ใช้ AppRouter เพื่อจัดการเส้นทาง
-      initialRoute: '/', // หน้าแรกจะเป็น HomePage
+      routerConfig: _appRouter.config(),
     );
   }
 }
