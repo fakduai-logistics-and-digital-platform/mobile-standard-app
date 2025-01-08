@@ -21,4 +21,7 @@ flutter run
 
 # run without log other in andriod
 flutter run --no-enable-impeller
+
+# build db
+dart run build_runner build 
 ```
