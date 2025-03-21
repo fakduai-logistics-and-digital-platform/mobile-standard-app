@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_app_standard/domain/datasource/app_datebase.dart';
 import 'package:mobile_app_standard/domain/repositories/todo_repo.dart';
+import 'package:mobile_app_standard/feature/todo/model/todo_model.dart';
 
 part 'todo_event.dart';
 part 'todo_state.dart';
@@ -23,7 +24,9 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       if (kDebugMode) {
         print('Loaded todos: $todos');
       }
-      emit(TodoLoaded(todos));
+      final todoModels =
+          todos.map((todo) => TodoModel.fromDrift(todo)).toList();
+      emit(TodoLoaded(todoModels));
     } catch (e) {
       if (kDebugMode) {
         print('Failed to load todos: $e');

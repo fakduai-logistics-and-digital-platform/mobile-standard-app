@@ -8,7 +8,7 @@ class TodoInitial extends TodoState {}
 class TodoLoading extends TodoState {}
 
 class TodoLoaded extends TodoState {
-  final List<TodoItem> todos;
+  final List<TodoModel> todos;
 
   TodoLoaded(this.todos);
 }

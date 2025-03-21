@@ -22,12 +22,12 @@ class TodoModel {
     );
   }
 
-  factory TodoModel.fromDrift(TodoItemsCompanion data) {
+  factory TodoModel.fromDrift(TodoItem data) {
     return TodoModel(
-      id: data.id.value,
-      title: data.title.value,
-      content: data.content.value,
-      createdAt: data.createdAt.value ?? DateTime.now(),
+      id: data.id,
+      title: data.title,
+      content: data.content,
+      createdAt: data.createdAt ?? DateTime.now(),
     );
   }
 

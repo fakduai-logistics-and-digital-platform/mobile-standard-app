@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_app_standard/domain/datasource/app_datebase.dart';
 import 'package:mobile_app_standard/feature/todo/bloc/todo_bloc.dart';
+import 'package:mobile_app_standard/feature/todo/model/todo_model.dart';
 import 'package:mobile_app_standard/feature/todo/widgets/dialog/add_todo_dialog.dart';
 import 'package:mobile_app_standard/shared/styles/p_colors.dart';
 import 'package:mobile_app_standard/shared/styles/p_size.dart';
@@ -32,7 +33,7 @@ class TodoPage extends StatelessWidget {
             Expanded(
               child: BlocBuilder<TodoBloc, TodoState>(
                 builder: (todoContext, state) {
-                  final List<TodoItem> items = [];
+                  final List<TodoModel> items = [];
                   if (state is TodoLoading) {
                     return const Center(child: CircularProgressIndicator());
                   }
