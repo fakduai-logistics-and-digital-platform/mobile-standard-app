@@ -22,13 +22,9 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     TodoRoute.name: (routeData) {
-      final args = routeData.argsAs<TodoRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: TodoPage(
-          key: args.key,
-          todoRepository: args.todoRepository,
-        ),
+        child: const TodoPage(),
       );
     },
   };
@@ -50,37 +46,14 @@ class HomeRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [TodoPage]
-class TodoRoute extends PageRouteInfo<TodoRouteArgs> {
-  TodoRoute({
-    Key? key,
-    required TodoRepository todoRepository,
-    List<PageRouteInfo>? children,
-  }) : super(
+class TodoRoute extends PageRouteInfo<void> {
+  const TodoRoute({List<PageRouteInfo>? children})
+      : super(
           TodoRoute.name,
-          args: TodoRouteArgs(
-            key: key,
-            todoRepository: todoRepository,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'TodoRoute';
 
-  static const PageInfo<TodoRouteArgs> page = PageInfo<TodoRouteArgs>(name);
-}
-
-class TodoRouteArgs {
-  const TodoRouteArgs({
-    this.key,
-    required this.todoRepository,
-  });
-
-  final Key? key;
-
-  final TodoRepository todoRepository;
-
-  @override
-  String toString() {
-    return 'TodoRouteArgs{key: $key, todoRepository: $todoRepository}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }

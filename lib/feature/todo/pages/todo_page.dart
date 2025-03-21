@@ -1,58 +1,78 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile_app_standard/domain/repositories/toda_repo.dart';
+import 'package:mobile_app_standard/domain/datasource/app_datebase.dart';
 import 'package:mobile_app_standard/feature/todo/bloc/todo_bloc.dart';
-import 'package:mobile_app_standard/feature/todo/widgets/add_todo_dialog.dart';
+import 'package:mobile_app_standard/feature/todo/widgets/dialog/add_todo_dialog.dart';
+import 'package:mobile_app_standard/shared/styles/p_colors.dart';
+import 'package:mobile_app_standard/shared/styles/p_size.dart';
+import 'package:mobile_app_standard/shared/widgets/appbar/appbar_custom.dart';
 
 @RoutePage()
 class TodoPage extends StatelessWidget {
-  final TodoRepository todoRepository;
-
-  const TodoPage({super.key, required this.todoRepository});
+  const TodoPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final currentRouteName = context.routeData.name;
     return Scaffold(
-      appBar: AppBar(title: const Text('Todo List')),
-      body: BlocListener<TodoBloc, TodoState>(
-        listener: (context, state) {
-          // ฟังเมื่อมี TodoError
-          if (state is TodoError) {
-            // แสดง SnackBar หรือ Popup
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Error: ${state.message}'),
-                duration: const Duration(seconds: 3),
-              ),
-            );
-          }
-        },
-        child: BlocBuilder<TodoBloc, TodoState>(
-          builder: (context, state) {
-            if (state is TodoLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (state is TodoLoaded) {
-              final items = state.todos;
+      appBar: AppBarCustom(currentRouteName: currentRouteName),
+      backgroundColor: PColor.backgroundColor,
+      body: Container(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                spacing: 8,
+                children: [
+                  Icon(Icons.list_alt_outlined, color: PColor.primaryColor),
+                  Text("Todo List", style: TextStyle(fontSize: PText.textXl)),
+                ]),
+            Expanded(
+              child: BlocBuilder<TodoBloc, TodoState>(
+                builder: (todoContext, state) {
+                  final List<TodoItem> items = [];
+                  if (state is TodoLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (state is TodoLoaded) {
+                    items.addAll(state.todos);
+                  }
 
-              return ListView.builder(
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(items[index].title),
-                    subtitle: Text(items[index].content),
+                  if (items.isEmpty) {
+                    return const Center(child: Text('No todos available.'));
+                  }
+                  return ListView.builder(
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: ListTile(
+                          title: Text(items[index].title),
+                          subtitle: Text(items[index].content),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.delete),
+                            color: PColor.errorColor,
+                            onPressed: () {
+                              context
+                                  .read<TodoBloc>()
+                                  .add(DeleteTodo(id: items[index].id));
+                            },
+                          ),
+                        ),
+                      );
+                    },
                   );
                 },
-              );
-            }
-
-            return const Center(child: Text('No todos available.'));
-          },
+              ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: Builder(
           builder: (context) => FloatingActionButton(
+                backgroundColor: PColor.primaryColor,
+                foregroundColor: Colors.white,
                 onPressed: () {
                   showDialog(
                     context: context,

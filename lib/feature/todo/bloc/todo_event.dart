@@ -14,3 +14,9 @@ class AddTodo extends TodoEvent {
     required this.content,
   });
 }
+
+class DeleteTodo extends TodoEvent {
+  final int id;
+
+  DeleteTodo({required this.id});
+}
