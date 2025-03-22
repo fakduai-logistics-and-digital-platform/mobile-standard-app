@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_app_standard/feature/todo/bloc/todo_bloc.dart';
 import 'package:mobile_app_standard/feature/todo/model/todo_model.dart';
 import 'package:mobile_app_standard/feature/todo/widgets/dialog/add_todo_dialog.dart';
+import 'package:mobile_app_standard/i18n/i18n.dart';
 import 'package:mobile_app_standard/shared/styles/p_colors.dart';
 import 'package:mobile_app_standard/shared/styles/p_size.dart';
 import 'package:mobile_app_standard/shared/widgets/appbar/appbar_custom.dart';
@@ -15,6 +16,7 @@ class TodoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentRouteName = context.routeData.name;
+    final msg = AppLocalizations(context).todoPage;
     return Scaffold(
       appBar: AppBarCustom(currentRouteName: currentRouteName),
       backgroundColor: PColor.backgroundColor,
@@ -27,7 +29,8 @@ class TodoPage extends StatelessWidget {
                 spacing: 8,
                 children: [
                   Icon(Icons.list_alt_outlined, color: PColor.primaryColor),
-                  Text("Todo List", style: TextStyle(fontSize: PText.textXl)),
+                  Text(msg.title_todo,
+                      style: TextStyle(fontSize: PText.textXl)),
                 ]),
             Expanded(
               child: BlocBuilder<TodoBloc, TodoState>(
@@ -41,7 +44,7 @@ class TodoPage extends StatelessWidget {
                   }
 
                   if (items.isEmpty) {
-                    return const Center(child: Text('No todos available.'));
+                    return Center(child: Text(msg.text_no_todo));
                   }
                   return ListView.builder(
                     itemCount: items.length,

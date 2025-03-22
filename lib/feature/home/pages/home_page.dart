@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app_standard/domain/http_client/ip.dart';
+import 'package:mobile_app_standard/i18n/i18n.dart';
 import 'package:mobile_app_standard/locator.dart';
 import 'package:mobile_app_standard/shared/styles/p_colors.dart';
 import 'package:mobile_app_standard/shared/styles/p_size.dart';
@@ -21,6 +22,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final currentRouteName = context.routeData.name;
+    final msg = AppLocalizations(context).homePage;
+    final msgGeneral = AppLocalizations(context).general;
     return Scaffold(
       appBar: AppBarCustom(currentRouteName: currentRouteName),
       backgroundColor: PColor.backgroundColor,
@@ -32,7 +35,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Welcome to Fakduai App',
+              msg.text_welcome('Fakduai APP'),
               style: TextStyle(
                 fontSize: PText.text2xl,
               ),
@@ -56,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                         TextButton(
                           style: PStyle.btnSecondary,
                           onPressed: () => Navigator.of(context).pop(),
-                          child: const Text('Close'),
+                          child: Text(msgGeneral.close),
                         ),
                       ],
                     ),
@@ -74,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.white,
                         ),
                       )
-                    : const Text('Check IP'),
+                    : Text(msg.btn_check_ip),
               ),
             ),
           ],
