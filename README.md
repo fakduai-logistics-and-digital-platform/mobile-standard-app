@@ -33,3 +33,12 @@ flutter run
 flutter build apk
 flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
 ```
+
+# Generate i18n
+
+- แก้ไข `generate_i18n.sh` เมื่อมีการเพิ่มไฟล์ใหม่
+- ใช้คำสั่งนี้เพื่อ generate i18n
+
+```
+sh generate_i18n.sh
+```
