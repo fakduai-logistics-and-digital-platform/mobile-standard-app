@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final currentRouteName = context.routeData.name;
     final msg = AppLocalizations(context).homePage;
+    final msgGeneral = AppLocalizations(context).general;
     return Scaffold(
       appBar: AppBarCustom(currentRouteName: currentRouteName),
       backgroundColor: PColor.backgroundColor,
@@ -58,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                         TextButton(
                           style: PStyle.btnSecondary,
                           onPressed: () => Navigator.of(context).pop(),
-                          child: const Text('Close'),
+                          child: Text(msgGeneral.close),
                         ),
                       ],
                     ),

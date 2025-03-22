@@ -1,14 +1,21 @@
 {
-    "@@locale": "en",
-    "text_welcome": "Welcome to {appName}",
-    "@text_welcome": {
-      "description": "Welcome to {appName}",
-      "placeholders": {
+  "@@locale": "en",
+  "text_welcome": "Welcome to {appName}",
+  "@text_welcome": {
+    "description": "Welcome to {appName}",
+    "placeholders": {
       "appName": {}
     }
-    },
-    "btn_check_ip": "Check IP",
-    "@btn_check_ip": {
-      "description": "Check IP"
+  },
+  "btn_check_ip": "Check IP",
+  "@btn_check_ip": {
+    "description": "Check IP"
+  },
+  "text_ip": "IP: {ip}",
+  "@text_ip": {
+    "description": "IP: {ip}",
+    "placeholders": {
+      "ip": {}
     }
+  }
 }

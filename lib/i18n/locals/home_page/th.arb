@@ -7,5 +7,11 @@
         }
     },
     "btn_check_ip": "ตรวจสอบ IP",
-    "@btn_check_ip": {}
+    "@btn_check_ip": {},
+    "text_ip": "ไอพี: {ip}",
+    "@text_ip": {
+        "placeholders": {
+            "ip": {}
+        }
+    }
 }
