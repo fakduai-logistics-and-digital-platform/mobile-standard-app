@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app_standard/router/router.dart';
 import 'package:mobile_app_standard/shared/styles/p_colors.dart';
+import 'package:mobile_app_standard/shared/widgets/appbar/language_dropdown.dart';
 
 class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
   final String currentRouteName;
@@ -51,6 +52,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
               ),
             ],
           ),
+          LanguageDropdown(context: context),
           IconButton(
             icon: const Icon(
               Icons.notifications,
