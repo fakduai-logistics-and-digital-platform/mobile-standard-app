@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_app_standard/i18n/i18n.dart';
 import 'package:mobile_app_standard/router/router.dart';
 import 'package:mobile_app_standard/shared/styles/p_colors.dart';
 import 'package:mobile_app_standard/shared/widgets/appbar/language_dropdown.dart';
@@ -14,6 +15,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final msg = AppLocalizations(context).appbar;
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -33,7 +35,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
           Row(
             children: [
               _buildRouteButton(
-                'Home',
+                msg.home_route_name,
                 isActive: currentRouteName == HomeRoute.name,
                 onPressed: () {
                   currentRouteName == HomeRoute.name
@@ -42,7 +44,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
                 },
               ),
               _buildRouteButton(
-                'Todo',
+                msg.todo_route_name,
                 isActive: currentRouteName == TodoRoute.name,
                 onPressed: () {
                   currentRouteName == TodoRoute.name

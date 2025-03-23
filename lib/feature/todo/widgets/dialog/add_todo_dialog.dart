@@ -30,12 +30,12 @@ class AddTodoDialog extends StatelessWidget {
           children: [
             TextField(
               controller: _titleController,
-              decoration: const InputDecoration(labelText: 'Title'),
+              decoration: InputDecoration(labelText: msg.label_title),
             ),
             TextField(
               maxLength: 32,
               controller: _contentController,
-              decoration: const InputDecoration(labelText: 'Content'),
+              decoration: InputDecoration(labelText: msg.label_content),
             ),
           ],
         ),
