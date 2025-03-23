@@ -4,6 +4,8 @@
 
 ### Generate Database or Auto Route
 
+- Whenever a new model is added, a migration is written, or a new route is introduced, perform the generation process using the following command:
+
 ```bash
 dart run build_runner build
 ```
@@ -130,7 +132,19 @@ flutter run
 ### Build APK
 
 ```bash
+# For a single APK
 flutter build apk
+
 # For split APKs by ABI
 flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
 ```
+
+### Export Database
+
+```bash
+adb exec-out run-as com.example.mobile_app cat /data/data/com.example.mobile_app/app_flutter/my_database.sqlite > my_database.sqlite
+```
+
+### More
+
+- When using an API with a localhost in the Android Studio emulator for Flutter, utilize `http://10.0.2.2` instead of `localhost`.
