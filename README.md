@@ -1,31 +1,41 @@
-# mobile_app_standard
+ผมจะปรับปรุง `README.md` ให้สอดคล้องกับ script ที่เราเขียนไป โดยทำให้ส่วน "Generate i18n" สะท้อนถึงการใช้งาน script ที่ dynamic และไม่ต้องแก้ไขไฟล์ `generate_i18n.sh` หรือ `i18n.dart` ด้วยตัวเองทุกครั้งที่มีการเพิ่มไฟล์ใหม่ นี่คือเวอร์ชันที่แก้ไขแล้ว:
+
+---
+
+# Mobile App Standard
 
 ## Getting Started
 
-### Generate Database Or Auto Route
+### Generate Database or Auto Route
 
-```
+```bash
 dart run build_runner build
 ```
 
 ### Run
 
-```
-// generate i18n
-sh generate_i18n.sh
+```bash
+# Generate i18n
+sh generate_all.sh
 
-// Open the emulator before running.
+# Open the emulator before running.
 
-// run
+# Run the app
 flutter run
 ```
 
 ### Generate i18n
 
-- If new files are added in the future, you’ll need to edit `generate_i18n.sh` and `lib/i18n/i18n.dart` following the examples in those files.
-- After that, run `sh generate_i18n.sh`, and every time you add something new, you’ll need to manually import the files yourself.
-- Then, stop the app and restart it.
-- If you’re adding new words to an existing file, you can just add them directly. But once you’re done, you still need to run `sh generate_i18n.sh`.
+- The `generate_all.sh` script automatically generates localization files and updates `lib/i18n/i18n.dart` based on folders in `lib/i18n/locals/`.
+- When adding a new page (e.g., `settings_page`), simply create a new folder in `lib/i18n/locals/` (e.g., `lib/i18n/locals/settings_page`) with `en.arb` and `th.arb` files. Then, run:
+  ```bash
+  sh generate_all.sh
+  ```
+- The script will:
+  1. Generate localization files (e.g., `settings_page_localizations.dart`) using `flutter gen-l10n`.
+  2. Update `lib/i18n/i18n.dart` with the new imports, delegates, and getters automatically.
+- If you add new words to an existing `.arb` file (e.g., `general/en.arb`), just run `sh generate_all.sh` again to regenerate the affected localization file.
+- After running the script, stop the app and restart it with `flutter run` to apply the changes.
 
 ## Project Structure
 
@@ -66,7 +76,7 @@ flutter run
 │           └── dialog
 │               └── add_todo_dialog.dart  # Dialog widget for adding a Todo
 ├── i18n
-│   ├── i18n.dart                  # File defining language management (internationalization)
+│   ├── i18n.dart                  # File defining language management (internationalization, auto-generated)
 │   └── locals
 │       ├── general
 │       │   ├── en.arb            # English text for general sections
@@ -102,13 +112,29 @@ flutter run
             └── toast_helper.dart         # Utility file for managing Toast alerts
 ```
 
+## Best Practices
+
+### File Naming
+
+- Use `lowercase_with_underscores`: `home_screen.dart`, `user_model.dart`
+- Name files descriptively: `custom_button.dart`, `login_screen.dart`
+- Avoid spaces or uppercase letters.
+
+### Variable Naming
+
+- Use `camelCase`: `userName`, `getUserData`
+- Be descriptive: `itemCount` instead of `x`
+- Use `UPPER_CASE` for constants: `MAX_LOGIN_ATTEMPTS`
+- Prefix private variables with `_`: `_userId`
+
 ### Install Extension Bloc Generator
 
-- `https://marketplace.visualstudio.com/items?itemName=FelixAngelov.bloc`
+- [Bloc Generator Extension](https://marketplace.visualstudio.com/items?itemName=FelixAngelov.bloc)
 
 ### Build APK
 
-```
+```bash
 flutter build apk
+# For split APKs by ABI
 flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
 ```

@@ -19,5 +19,13 @@
     "text_added_success": "Todo added successfully.",
     "@text_added_success": {
         "description": "Todo added successfully."
+    },
+    "label_title": "Title",
+    "@label_title": {
+        "description": "Title"
+    },
+    "label_content": "Content",
+    "@label_content": {
+        "description": "Content"
     }
 }
