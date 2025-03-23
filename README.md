@@ -112,6 +112,21 @@ flutter run
             └── toast_helper.dart         # Utility file for managing Toast alerts
 ```
 
+## Best Practices
+
+### File Naming
+
+- Use `lowercase_with_underscores`: `home_screen.dart`, `user_model.dart`
+- Name files descriptively: `custom_button.dart`, `login_screen.dart`
+- Avoid spaces or uppercase letters.
+
+### Variable Naming
+
+- Use `camelCase`: `userName`, `getUserData`
+- Be descriptive: `itemCount` instead of `x`
+- Use `UPPER_CASE` for constants: `MAX_LOGIN_ATTEMPTS`
+- Prefix private variables with `_`: `_userId`
+
 ### Install Extension Bloc Generator
 
 - [Bloc Generator Extension](https://marketplace.visualstudio.com/items?itemName=FelixAngelov.bloc)
