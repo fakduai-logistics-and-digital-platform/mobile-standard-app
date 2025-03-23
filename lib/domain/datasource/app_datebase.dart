@@ -14,6 +14,22 @@ class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => 1;
 
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        beforeOpen: (details) async {
+          print('Previous DB version: ${details.versionBefore}');
+          print('Target schema version: $schemaVersion');
+        },
+        onCreate: (Migrator m) async {
+          await m.createAll();
+        },
+        onUpgrade: (Migrator m, int from, int to) async {
+          if (from == 1 && to == 2) {
+            // Add a new column when upgrading from version 1 to 2
+          }
+        },
+      );
+
   static QueryExecutor _openConnection() {
     return driftDatabase(
       name: 'my_database',

@@ -4,6 +4,8 @@
 
 ### Generate Database or Auto Route
 
+- Whenever a new model is added, a migration is written, or a new route is introduced, perform the generation process using the following command:
+
 ```bash
 dart run build_runner build
 ```
@@ -130,7 +132,9 @@ flutter run
 ### Build APK
 
 ```bash
+# For a single APK
 flutter build apk
+
 # For split APKs by ABI
 flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
 ```
