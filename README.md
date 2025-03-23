@@ -134,3 +134,13 @@ flutter build apk
 # For split APKs by ABI
 flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
 ```
+
+### Export Database
+
+```bash
+adb exec-out run-as com.example.mobile_app cat /data/data/com.example.mobile_app/app_flutter/my_database.sqlite > my_database.sqlite
+```
+
+### More
+
+- When using an API with a localhost in the Android Studio emulator for Flutter, utilize `http://10.0.2.2` instead of `localhost`.
