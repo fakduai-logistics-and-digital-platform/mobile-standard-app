@@ -11,6 +11,12 @@ dart run build_runner build
 ### Run
 
 ```
+// generate i18n
+sh generate_i18n.sh
+
+// Open the emulator before running.
+
+// run
 flutter run
 ```
 
