@@ -2,10 +2,7 @@
   "@@locale": "en",
   "text_welcome": "Welcome to {appName}",
   "@text_welcome": {
-    "description": "Welcome to {appName}",
-    "placeholders": {
-      "appName": {}
-    }
+    "description": "Welcome to {appName}"
   },
   "btn_check_ip": "Check IP",
   "@btn_check_ip": {
@@ -13,9 +10,6 @@
   },
   "text_ip": "IP: {ip}",
   "@text_ip": {
-    "description": "IP: {ip}",
-    "placeholders": {
-      "ip": {}
-    }
+    "description": "IP: {ip}"
   }
 }
