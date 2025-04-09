@@ -38,8 +38,17 @@ class $TodoItemsTable extends TodoItems
   late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
       'created_at', aliasedName, true,
       type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _priorityMeta =
+      const VerificationMeta('priority');
   @override
-  List<GeneratedColumn> get $columns => [id, title, content, createdAt];
+  late final GeneratedColumn<int> priority = GeneratedColumn<int>(
+      'priority', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, title, content, createdAt, priority];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -69,6 +78,10 @@ class $TodoItemsTable extends TodoItems
       context.handle(_createdAtMeta,
           createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
     }
+    if (data.containsKey('priority')) {
+      context.handle(_priorityMeta,
+          priority.isAcceptableOrUnknown(data['priority']!, _priorityMeta));
+    }
     return context;
   }
 
@@ -86,6 +99,8 @@ class $TodoItemsTable extends TodoItems
           .read(DriftSqlType.string, data['${effectivePrefix}body'])!,
       createdAt: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at']),
+      priority: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}priority'])!,
     );
   }
 
@@ -100,11 +115,13 @@ class TodoItem extends DataClass implements Insertable<TodoItem> {
   final String title;
   final String content;
   final DateTime? createdAt;
+  final int priority;
   const TodoItem(
       {required this.id,
       required this.title,
       required this.content,
-      this.createdAt});
+      this.createdAt,
+      required this.priority});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -114,6 +131,7 @@ class TodoItem extends DataClass implements Insertable<TodoItem> {
     if (!nullToAbsent || createdAt != null) {
       map['created_at'] = Variable<DateTime>(createdAt);
     }
+    map['priority'] = Variable<int>(priority);
     return map;
   }
 
@@ -125,6 +143,7 @@ class TodoItem extends DataClass implements Insertable<TodoItem> {
       createdAt: createdAt == null && nullToAbsent
           ? const Value.absent()
           : Value(createdAt),
+      priority: Value(priority),
     );
   }
 
@@ -136,6 +155,7 @@ class TodoItem extends DataClass implements Insertable<TodoItem> {
       title: serializer.fromJson<String>(json['title']),
       content: serializer.fromJson<String>(json['content']),
       createdAt: serializer.fromJson<DateTime?>(json['createdAt']),
+      priority: serializer.fromJson<int>(json['priority']),
     );
   }
   @override
@@ -146,6 +166,7 @@ class TodoItem extends DataClass implements Insertable<TodoItem> {
       'title': serializer.toJson<String>(title),
       'content': serializer.toJson<String>(content),
       'createdAt': serializer.toJson<DateTime?>(createdAt),
+      'priority': serializer.toJson<int>(priority),
     };
   }
 
@@ -153,12 +174,14 @@ class TodoItem extends DataClass implements Insertable<TodoItem> {
           {int? id,
           String? title,
           String? content,
-          Value<DateTime?> createdAt = const Value.absent()}) =>
+          Value<DateTime?> createdAt = const Value.absent(),
+          int? priority}) =>
       TodoItem(
         id: id ?? this.id,
         title: title ?? this.title,
         content: content ?? this.content,
         createdAt: createdAt.present ? createdAt.value : this.createdAt,
+        priority: priority ?? this.priority,
       );
   TodoItem copyWithCompanion(TodoItemsCompanion data) {
     return TodoItem(
@@ -166,6 +189,7 @@ class TodoItem extends DataClass implements Insertable<TodoItem> {
       title: data.title.present ? data.title.value : this.title,
       content: data.content.present ? data.content.value : this.content,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      priority: data.priority.present ? data.priority.value : this.priority,
     );
   }
 
@@ -175,13 +199,14 @@ class TodoItem extends DataClass implements Insertable<TodoItem> {
           ..write('id: $id, ')
           ..write('title: $title, ')
           ..write('content: $content, ')
-          ..write('createdAt: $createdAt')
+          ..write('createdAt: $createdAt, ')
+          ..write('priority: $priority')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, title, content, createdAt);
+  int get hashCode => Object.hash(id, title, content, createdAt, priority);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -189,7 +214,8 @@ class TodoItem extends DataClass implements Insertable<TodoItem> {
           other.id == this.id &&
           other.title == this.title &&
           other.content == this.content &&
-          other.createdAt == this.createdAt);
+          other.createdAt == this.createdAt &&
+          other.priority == this.priority);
 }
 
 class TodoItemsCompanion extends UpdateCompanion<TodoItem> {
@@ -197,17 +223,20 @@ class TodoItemsCompanion extends UpdateCompanion<TodoItem> {
   final Value<String> title;
   final Value<String> content;
   final Value<DateTime?> createdAt;
+  final Value<int> priority;
   const TodoItemsCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
     this.content = const Value.absent(),
     this.createdAt = const Value.absent(),
+    this.priority = const Value.absent(),
   });
   TodoItemsCompanion.insert({
     this.id = const Value.absent(),
     required String title,
     required String content,
     this.createdAt = const Value.absent(),
+    this.priority = const Value.absent(),
   })  : title = Value(title),
         content = Value(content);
   static Insertable<TodoItem> custom({
@@ -215,12 +244,14 @@ class TodoItemsCompanion extends UpdateCompanion<TodoItem> {
     Expression<String>? title,
     Expression<String>? content,
     Expression<DateTime>? createdAt,
+    Expression<int>? priority,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (title != null) 'title': title,
       if (content != null) 'body': content,
       if (createdAt != null) 'created_at': createdAt,
+      if (priority != null) 'priority': priority,
     });
   }
 
@@ -228,12 +259,14 @@ class TodoItemsCompanion extends UpdateCompanion<TodoItem> {
       {Value<int>? id,
       Value<String>? title,
       Value<String>? content,
-      Value<DateTime?>? createdAt}) {
+      Value<DateTime?>? createdAt,
+      Value<int>? priority}) {
     return TodoItemsCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
       content: content ?? this.content,
       createdAt: createdAt ?? this.createdAt,
+      priority: priority ?? this.priority,
     );
   }
 
@@ -252,6 +285,9 @@ class TodoItemsCompanion extends UpdateCompanion<TodoItem> {
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
+    if (priority.present) {
+      map['priority'] = Variable<int>(priority.value);
+    }
     return map;
   }
 
@@ -261,7 +297,8 @@ class TodoItemsCompanion extends UpdateCompanion<TodoItem> {
           ..write('id: $id, ')
           ..write('title: $title, ')
           ..write('content: $content, ')
-          ..write('createdAt: $createdAt')
+          ..write('createdAt: $createdAt, ')
+          ..write('priority: $priority')
           ..write(')'))
         .toString();
   }
@@ -283,12 +320,14 @@ typedef $$TodoItemsTableCreateCompanionBuilder = TodoItemsCompanion Function({
   required String title,
   required String content,
   Value<DateTime?> createdAt,
+  Value<int> priority,
 });
 typedef $$TodoItemsTableUpdateCompanionBuilder = TodoItemsCompanion Function({
   Value<int> id,
   Value<String> title,
   Value<String> content,
   Value<DateTime?> createdAt,
+  Value<int> priority,
 });
 
 class $$TodoItemsTableFilterComposer
@@ -311,6 +350,9 @@ class $$TodoItemsTableFilterComposer
 
   ColumnFilters<DateTime> get createdAt => $composableBuilder(
       column: $table.createdAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get priority => $composableBuilder(
+      column: $table.priority, builder: (column) => ColumnFilters(column));
 }
 
 class $$TodoItemsTableOrderingComposer
@@ -333,6 +375,9 @@ class $$TodoItemsTableOrderingComposer
 
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
       column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get priority => $composableBuilder(
+      column: $table.priority, builder: (column) => ColumnOrderings(column));
 }
 
 class $$TodoItemsTableAnnotationComposer
@@ -355,6 +400,9 @@ class $$TodoItemsTableAnnotationComposer
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<int> get priority =>
+      $composableBuilder(column: $table.priority, builder: (column) => column);
 }
 
 class $$TodoItemsTableTableManager extends RootTableManager<
@@ -384,24 +432,28 @@ class $$TodoItemsTableTableManager extends RootTableManager<
             Value<String> title = const Value.absent(),
             Value<String> content = const Value.absent(),
             Value<DateTime?> createdAt = const Value.absent(),
+            Value<int> priority = const Value.absent(),
           }) =>
               TodoItemsCompanion(
             id: id,
             title: title,
             content: content,
             createdAt: createdAt,
+            priority: priority,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required String title,
             required String content,
             Value<DateTime?> createdAt = const Value.absent(),
+            Value<int> priority = const Value.absent(),
           }) =>
               TodoItemsCompanion.insert(
             id: id,
             title: title,
             content: content,
             createdAt: createdAt,
+            priority: priority,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

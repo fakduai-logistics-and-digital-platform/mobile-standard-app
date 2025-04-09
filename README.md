@@ -14,7 +14,7 @@ dart run build_runner build
 
 ```bash
 # Generate i18n
-sh generate_all.sh
+./generate_i18n.sh
 
 # Open the emulator before running.
 

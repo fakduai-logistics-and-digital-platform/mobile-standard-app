@@ -5,12 +5,14 @@ class TodoModel {
   final String title;
   final String content;
   final DateTime createdAt;
+  final int priority;
 
   TodoModel({
     required this.id,
     required this.title,
     required this.content,
     required this.createdAt,
+    required this.priority,
   });
 
   factory TodoModel.fromJson(Map<String, dynamic> json) {
@@ -19,6 +21,7 @@ class TodoModel {
       title: json['title'],
       content: json['content'],
       createdAt: DateTime.parse(json['createdAt']),
+      priority: json['priority'],
     );
   }
 
@@ -28,6 +31,7 @@ class TodoModel {
       title: data.title,
       content: data.content,
       createdAt: data.createdAt ?? DateTime.now(),
+      priority: data.priority,
     );
   }
 
@@ -37,6 +41,7 @@ class TodoModel {
       'title': title,
       'content': content,
       'createdAt': createdAt.toUtc().toIso8601String(),
+      'priority': 0,
     };
   }
 }

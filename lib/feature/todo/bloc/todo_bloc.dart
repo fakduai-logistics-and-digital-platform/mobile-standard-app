@@ -15,6 +15,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     on<LoadTodos>(_onLoadTodos);
     on<AddTodo>(_onAddTodo);
     on<DeleteTodo>(_onDeleteTodo);
+    on<UpdatePriorityTodo>(_onUpdateTodoPriority);
     add(LoadTodos());
   }
 
@@ -53,6 +54,17 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       add(LoadTodos());
     } catch (e) {
       emit(TodoError('Failed to delete todo: ${e.toString()}'));
+    }
+  }
+
+  Future<void> _onUpdateTodoPriority(
+      UpdatePriorityTodo event, Emitter<TodoState> emit) async {
+    emit(TodoLoading());
+    try {
+      await todoRepo.updatePriorityTodoItem(event.id, event.priority);
+      add(LoadTodos());
+    } catch (e) {
+      emit(TodoError('Failed to update todo: ${e.toString()}'));
     }
   }
 }

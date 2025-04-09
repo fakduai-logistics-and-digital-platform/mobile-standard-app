@@ -20,3 +20,10 @@ class DeleteTodo extends TodoEvent {
 
   DeleteTodo({required this.id});
 }
+
+class UpdatePriorityTodo extends TodoEvent {
+  final int id;
+  final int priority;
+
+  UpdatePriorityTodo({required this.id, required this.priority});
+}

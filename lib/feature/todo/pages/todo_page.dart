@@ -53,15 +53,51 @@ class TodoPage extends StatelessWidget {
                         child: ListTile(
                           title: Text(items[index].title),
                           subtitle: Text(items[index].content),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete),
-                            color: PColor.errorColor,
-                            onPressed: () {
-                              context
-                                  .read<TodoBloc>()
-                                  .add(DeleteTodo(id: items[index].id));
-                            },
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.arrow_upward),
+                                onPressed: () {
+                                  context
+                                      .read<TodoBloc>()
+                                      .add(UpdatePriorityTodo(
+                                        id: items[index].id,
+                                        priority: items[index].priority + 1,
+                                      ));
+                                },
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.arrow_downward),
+                                onPressed: () {
+                                  context
+                                      .read<TodoBloc>()
+                                      .add(UpdatePriorityTodo(
+                                        id: items[index].id,
+                                        priority: items[index].priority - 1,
+                                      ));
+                                },
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.delete),
+                                color: PColor.errorColor,
+                                onPressed: () {
+                                  context
+                                      .read<TodoBloc>()
+                                      .add(DeleteTodo(id: items[index].id));
+                                },
+                              ),
+                            ],
                           ),
+                          // trailing: IconButton(
+                          //   icon: const Icon(Icons.delete),
+                          //   color: PColor.errorColor,
+                          //   onPressed: () {
+                          //     context
+                          //         .read<TodoBloc>()
+                          //         .add(DeleteTodo(id: items[index].id));
+                          //   },
+                          // ),
                         ),
                       );
                     },
