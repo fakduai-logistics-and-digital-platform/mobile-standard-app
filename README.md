@@ -137,6 +137,10 @@ flutter build apk
 
 # For split APKs by ABI
 flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
+
+# For Shell Script get version from pubspec.yaml
+chmod +x build_apk.sh
+./build_apk.sh
 ```
 
 ### Export Database
