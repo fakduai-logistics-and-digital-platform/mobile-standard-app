@@ -2,19 +2,18 @@
 
 ## Getting Started
 
-### Generate Database or Auto Route
+# First Run Command macOs
 
-- Whenever a new model is added, a migration is written, or a new route is introduced, perform the generation process using the following command:
-
-```bash
-dart run build_runner build
 ```
+# Install dependencies
+flutter pub get
 
-### Run
+# build db (Every time you edit a table in the db or add a route, you have to run it.)
+dart run build_runner build
 
-```bash
-# Generate i18n
+# Generate i18n (Every time you edit or add i18n you have to run it.)
 ./generate_i18n.sh
+
 
 # Open the emulator before running.
 
