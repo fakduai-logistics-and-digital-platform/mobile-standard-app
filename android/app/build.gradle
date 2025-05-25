@@ -6,6 +6,19 @@ plugins {
 }
 
 android {
+    flavorDimensions "app"
+    productFlavors {
+        dev {
+            dimension "app"
+            applicationId "com.example.mobile_app.dev"
+            resValue "string", "app_name", "mobile_app_standard Dev"
+        }
+        prod {
+            dimension "app"
+            applicationId "com.example.mobile_app"
+            resValue "string", "app_name", "mobile_app_standard"
+        }
+    }
     namespace = "com.example.mobile_app_standard"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
