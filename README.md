@@ -2,19 +2,18 @@
 
 ## Getting Started
 
-### Generate Database or Auto Route
+# First Run Command macOs
 
-- Whenever a new model is added, a migration is written, or a new route is introduced, perform the generation process using the following command:
-
-```bash
-dart run build_runner build
 ```
+# Install dependencies
+flutter pub get
 
-### Run
+# build db (Every time you edit a table in the db or add a route, you have to run it.)
+dart run build_runner build
 
-```bash
-# Generate i18n
+# Generate i18n (Every time you edit or add i18n you have to run it.)
 ./generate_i18n.sh
+
 
 # Open the emulator before running.
 
@@ -137,16 +136,31 @@ flutter build apk
 
 # For split APKs by ABI
 flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
+```
 
-# For Shell Script get version from pubspec.yaml
-chmod +x build_apk.sh
-./build_apk.sh
+# Run APK Other Mode
+
+```
+flutter run --flavor dev -t lib/main.dart --dart-define=flavor=dev
+flutter run --flavor prod -t lib/main.dart --dart-define=flavor=prod
+```
+
+# Build APK From Shell Script (Recommend)
+
+```
+# Develop
+chmod +x build_apk_dev.sh
+./build_apk_dev.sh
+
+# Production
+chmod +x build_apk_prod.sh
+./build_apk_prod.sh
 ```
 
 ### Export Database
 
 ```bash
-adb exec-out run-as com.example.mobile_app cat /data/data/com.example.mobile_app/app_flutter/my_database.sqlite > my_database.sqlite
+adb exec-out run-as com.example.mobile_app cat /data/data/com.example.mobile_app.dev/app_flutter/my_database.sqlite > my_database.sqlite
 ```
 
 ### More
