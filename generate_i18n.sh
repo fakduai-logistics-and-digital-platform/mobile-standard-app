@@ -38,7 +38,7 @@ EOF
 for dir in "$LOCALS_DIR"/*; do
     if [ -d "$dir" ]; then
         page_name=$(basename "$dir")
-        echo "import 'package:flutter_gen/gen_l10n/${page_name}_localizations.dart';" >> "$I18N_FILE"
+        echo "import 'package:mobile_app_standard/i18n/locals/${page_name}/${page_name}_localizations.dart';" >> "$I18N_FILE"
     fi
 done
 

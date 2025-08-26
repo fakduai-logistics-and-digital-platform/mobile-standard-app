@@ -20,8 +20,8 @@ else
     exit 1
 fi
 
-
-flutter build apk --flavor dev
+fvm use 3.35.2
+fvm flutter build apk --flavor dev
 
 BUILD_STATUS=$?
 

@@ -5,8 +5,10 @@
 # First Run Command macOs
 
 ```
+fvm use 3.35.2
+
 # Install dependencies
-flutter pub get
+fvm flutter pub get
 
 # build db (Every time you edit a table in the db or add a route, you have to run it.)
 dart run build_runner build
@@ -18,7 +20,7 @@ dart run build_runner build
 # Open the emulator before running.
 
 # Run the app
-flutter run
+fvm flutter run
 ```
 
 ### Generate i18n
@@ -29,10 +31,10 @@ flutter run
   sh generate_all.sh
   ```
 - The script will:
-  1. Generate localization files (e.g., `settings_page_localizations.dart`) using `flutter gen-l10n`.
+  1. Generate localization files (e.g., `settings_page_localizations.dart`) using `fvm flutter gen-l10n`.
   2. Update `lib/i18n/i18n.dart` with the new imports, delegates, and getters automatically.
 - If you add new words to an existing `.arb` file (e.g., `general/en.arb`), just run `sh generate_all.sh` again to regenerate the affected localization file.
-- After running the script, stop the app and restart it with `flutter run` to apply the changes.
+- After running the script, stop the app and restart it with `fvm flutter run` to apply the changes.
 
 ## Project Structure
 
@@ -132,17 +134,17 @@ flutter run
 
 ```bash
 # For a single APK
-flutter build apk
+fvm flutter build apk
 
 # For split APKs by ABI
-flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
+fvm flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
 ```
 
 # Run APK Other Mode
 
 ```
-flutter run --flavor dev -t lib/main.dart --dart-define=flavor=dev
-flutter run --flavor prod -t lib/main.dart --dart-define=flavor=prod
+fvm flutter run --flavor dev -t lib/main.dart --dart-define=flavor=dev
+fvm flutter run --flavor prod -t lib/main.dart --dart-define=flavor=prod
 ```
 
 # Build APK From Shell Script (Recommend)

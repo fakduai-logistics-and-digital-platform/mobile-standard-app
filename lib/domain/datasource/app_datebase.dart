@@ -6,9 +6,6 @@ part 'app_datebase.g.dart';
 
 @DriftDatabase(tables: [TodoItems])
 class AppDatabase extends _$AppDatabase {
-  // After generating code, this class needs to define a `schemaVersion` getter
-  // and a constructor telling drift where the database should be stored.
-  // These are described in the getting started guide: https://drift.simonbinder.eu/setup/
   AppDatabase() : super(_openConnection());
 
   @override
@@ -25,7 +22,6 @@ class AppDatabase extends _$AppDatabase {
         },
         onUpgrade: (Migrator m, int from, int to) async {
           if (from == 1 && to == 2) {
-            // Add a new column when upgrading from version 1 to 2
             await m.addColumn(todoItems, todoItems.priority);
           }
         },
@@ -33,7 +29,7 @@ class AppDatabase extends _$AppDatabase {
 
   static QueryExecutor _openConnection() {
     return driftDatabase(
-      name: 'my_database',
+      name: 'db',
     );
   }
 }
