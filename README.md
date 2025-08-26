@@ -178,3 +178,46 @@ adb exec-out run-as com.example.mobile_app cat /data/data/com.example.mobile_app
 ```
 cd ios && pod install
 ```
+
+### IOS Build
+
+ปัญหานี้คือ “ยังไม่มีใบรับรอง (certificate) และ provisioning profile สำหรับเซ็นโค้ด iOS” ครับ — แก้ได้ 3 ทางตามเป้าหมายของคุณ:
+
+# ทางเร็วสุด (Automatic Signing ใน Xcode) — แนะนำ
+
+1. เสียบ iPhone กับ Mac แล้วกด “Trust” ทั้งเครื่อง/อุปกรณ์
+2. เปิดโปรเจกต์ใน Xcode:
+
+```bash
+open ios/Runner.xcworkspace
+```
+
+3. เลือก **Runner (project)** → **Runner (target)** → แท็บ **Signing & Capabilities**
+
+   - ติ๊ก **Automatically manage signing**
+   - เลือก **Team** (Apple ID/Developer Team ของคุณ)
+   - เปลี่ยน **Bundle Identifier** ให้ยูนีค (เช่น `com.yourcompany.pinto`)
+
+4. Xcode จะสร้าง **iOS Development Certificate** และ **Provisioning Profile** ให้อัตโนมัติ
+5. เลือกอุปกรณ์ (บนแถบ run) → กด ▶︎ เพื่อ build/run ลงเครื่องจริง
+6. ถ้าลงเครื่องครั้งแรกต้อง “Trust” นักพัฒนาบน iPhone:
+   Settings → General → **VPN & Device Management** → เลือกโปรไฟล์นักพัฒนา → **Trust**
+
+> ทำสำเร็จแล้วค่อยกลับไปใช้สคริปต์ `fvm flutter build ipa` ได้ (ต้องมี provisioning แบบที่ตรงกับ export-method ที่ใช้)
+
+---
+
+# ถ้าต้องการ **.ipa สำหรับ TestFlight/App Store**
+
+ต้องใช้ **Distribution Certificate** และ **App Store provisioning profile**:
+
+1. Xcode → **Product > Archive** (เลือก Any iOS Device (arm64) ก่อน)
+2. Organizer เด้งขึ้น → **Distribute App** → **App Store Connect > Upload**
+   (หรือจะใช้ `fvm flutter build ipa --release --export-method app-store`)
+3. กรณี CLI: ให้ตั้ง signing ให้พร้อมใน Xcode ก่อน แล้วคำสั่งนี้จะหยิบไปใช้ได้อัตโนมัติ
+
+เช็กลิสต์ที่ต้องครบ:
+
+- มี **Apple Developer Program (แบบเสียเงิน)** สำหรับ TestFlight/App Store
+- Bundle ID ลงทะเบียนใน App Store Connect/Developer Portal
+- **Signing (Release)** ตั้ง Team & profiles ถูกตัว (ไม่ใช้ Development โปรไฟล์กับ app-store)
