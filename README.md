@@ -168,3 +168,13 @@ adb exec-out run-as com.example.mobile_app cat /data/data/com.example.mobile_app
 ### More
 
 - When using an API with a localhost in the Android Studio emulator for Flutter, utilize `http://10.0.2.2` instead of `localhost`.
+
+### IOS Implementation
+
+- Go to [https://docs.flutter.dev/get-started/install/macos/mobile-ios](https://docs.flutter.dev/get-started/install/macos/mobile-ios)
+- Go to Xcode -> Open Developer -> Simmu..
+- start install pod
+
+```
+cd ios && pod install
+```

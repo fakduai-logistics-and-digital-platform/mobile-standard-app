@@ -22,6 +22,22 @@
                 "prod",
                 "--dart-define=flavor=prod"
             ]
+        },
+        {
+            "name": "Run Dev Flavor (iOS)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+            ]
+        },
+        {
+            "name": "Run Prod Flavor (iOS)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+            ]
         }
     ]
 }
