@@ -130,6 +130,24 @@ fvm flutter run
 
 - [Bloc Generator Extension](https://marketplace.visualstudio.com/items?itemName=FelixAngelov.bloc)
 
+### Create Pages In Feature Folder Via Script
+
+```
+chmod +x create_feature.sh
+
+./create_feature.sh <page_name>
+# ex: ./create_feature.sh home
+```
+
+```
+lib/feature/home
+├── blocs
+├── models
+├── page
+│   └── home.page.dart
+└── widgets
+```
+
 ### Build APK
 
 ```bash
