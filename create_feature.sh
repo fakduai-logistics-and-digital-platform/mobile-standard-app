@@ -102,7 +102,7 @@ fi
 # ปิด Scaffold
 cat >> "$PAGE_FILE" <<EOF
       backgroundColor: PColor.backgroundColor,
-      body: Container(),
+      body: Container(child: const Center(child: Text('$FEATURE_NAME'))),
     );
   }
 }
