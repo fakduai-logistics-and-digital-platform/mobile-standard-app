@@ -19,6 +19,9 @@ PAGE_FILE="$BASE_DIR/pages/${FEATURE_NAME}_page.dart"
 cat > "$PAGE_FILE" <<EOF
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:$PROJECT_PKG/shared/styles/p_colors.dart';
+import 'package:$PROJECT_PKG/shared/widgets/appbar/appbar_custom.dart';
+import 'package:$PROJECT_PKG/shared/widgets/appbar/bottombar_custom.dart';
 
 @RoutePage()
 class ${CLASS_NAME}Page extends StatelessWidget {
@@ -26,7 +29,13 @@ class ${CLASS_NAME}Page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final currentRouteName = context.routeData.name;
+    return Scaffold(
+      bottomNavigationBar: BottomBarCustom(currentRouteName: currentRouteName),
+      appBar: AppBarCustom(currentRouteName: currentRouteName),
+      backgroundColor: PColor.backgroundColor,
+      body: Container(),
+    );
   }
 }
 EOF

@@ -130,7 +130,7 @@ fvm flutter run
 
 - [Bloc Generator Extension](https://marketplace.visualstudio.com/items?itemName=FelixAngelov.bloc)
 
-### Create Pages In Feature Folder Via Script
+### Create Pages In Feature Folder Via Script (Recommend)
 
 ```
 chmod +x create_feature.sh
