@@ -9,6 +9,7 @@ import 'package:mobile_app_standard/i18n/i18n.dart';
 import 'package:mobile_app_standard/shared/styles/p_colors.dart';
 import 'package:mobile_app_standard/shared/styles/p_size.dart';
 import 'package:mobile_app_standard/shared/widgets/appbar/appbar_custom.dart';
+import 'package:mobile_app_standard/shared/widgets/appbar/bottombar_custom.dart';
 
 @RoutePage()
 class TodoPage extends HookWidget {
@@ -35,6 +36,7 @@ class TodoPage extends HookWidget {
 
     return Scaffold(
       appBar: AppBarCustom(currentRouteName: currentRouteName),
+      bottomNavigationBar: BottomBarCustom(currentRouteName: currentRouteName),
       backgroundColor: PColor.backgroundColor,
       body: Container(
         padding: const EdgeInsets.all(16),
@@ -45,10 +47,7 @@ class TodoPage extends HookWidget {
               children: [
                 Icon(Icons.list_alt_outlined, color: PColor.primaryColor),
                 const SizedBox(width: 8),
-                Text(
-                  msg.title_todo,
-                  style: TextStyle(fontSize: PText.textXl),
-                ),
+                Text(msg.title_todo, style: TextStyle(fontSize: PText.textXl)),
               ],
             ),
             Expanded(
@@ -67,8 +66,9 @@ class TodoPage extends HookWidget {
                   }
 
                   // จำกัดจำนวนรายการที่แสดงตาม displayedItems
-                  final limitedItems =
-                      items.take(displayedItems.value).toList();
+                  final limitedItems = items
+                      .take(displayedItems.value)
+                      .toList();
 
                   return ListView.builder(
                     controller: scrollController, // ใช้ ScrollController
@@ -98,24 +98,24 @@ class TodoPage extends HookWidget {
                                 icon: const Icon(Icons.arrow_upward),
                                 onPressed: () {
                                   context.read<TodoBloc>().add(
-                                        UpdatePriorityTodo(
-                                          id: limitedItems[index].id,
-                                          priority:
-                                              limitedItems[index].priority + 1,
-                                        ),
-                                      );
+                                    UpdatePriorityTodo(
+                                      id: limitedItems[index].id,
+                                      priority:
+                                          limitedItems[index].priority + 1,
+                                    ),
+                                  );
                                 },
                               ),
                               IconButton(
                                 icon: const Icon(Icons.arrow_downward),
                                 onPressed: () {
                                   context.read<TodoBloc>().add(
-                                        UpdatePriorityTodo(
-                                          id: limitedItems[index].id,
-                                          priority:
-                                              limitedItems[index].priority - 1,
-                                        ),
-                                      );
+                                    UpdatePriorityTodo(
+                                      id: limitedItems[index].id,
+                                      priority:
+                                          limitedItems[index].priority - 1,
+                                    ),
+                                  );
                                 },
                               ),
                               IconButton(
@@ -123,7 +123,8 @@ class TodoPage extends HookWidget {
                                 color: PColor.errorColor,
                                 onPressed: () {
                                   context.read<TodoBloc>().add(
-                                      DeleteTodo(id: limitedItems[index].id));
+                                    DeleteTodo(id: limitedItems[index].id),
+                                  );
                                 },
                               ),
                             ],

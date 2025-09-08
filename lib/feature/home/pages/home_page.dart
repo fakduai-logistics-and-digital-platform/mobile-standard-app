@@ -8,6 +8,7 @@ import 'package:mobile_app_standard/shared/styles/p_colors.dart';
 import 'package:mobile_app_standard/shared/styles/p_size.dart';
 import 'package:mobile_app_standard/shared/styles/p_style.dart';
 import 'package:mobile_app_standard/shared/widgets/appbar/appbar_custom.dart';
+import 'package:mobile_app_standard/shared/widgets/appbar/bottombar_custom.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()
@@ -49,8 +50,10 @@ class HomePage extends HookWidget {
               backgroundColor: Colors.white,
               content: Skeletonizer(
                 enabled: isLoadingDialog.value,
-                child: Text(ip.value ?? '255.255.255.255',
-                    style: const TextStyle(fontSize: PText.textBase)),
+                child: Text(
+                  ip.value ?? '255.255.255.255',
+                  style: const TextStyle(fontSize: PText.textBase),
+                ),
               ),
               actions: [
                 TextButton(
@@ -71,6 +74,7 @@ class HomePage extends HookWidget {
 
     return Scaffold(
       appBar: AppBarCustom(currentRouteName: currentRouteName),
+      bottomNavigationBar: BottomBarCustom(currentRouteName: currentRouteName),
       backgroundColor: PColor.backgroundColor,
       body: Container(
         width: double.infinity,
@@ -80,9 +84,7 @@ class HomePage extends HookWidget {
           children: [
             Text(
               msg.text_welcome('Fakduai APP'),
-              style: const TextStyle(
-                fontSize: PText.text2xl,
-              ),
+              style: const TextStyle(fontSize: PText.text2xl),
             ),
             const SizedBox(height: 8),
             SizedBox(
