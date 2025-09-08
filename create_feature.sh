@@ -6,6 +6,8 @@ usage() {
   echo "❌ Usage: $0 <feature_name> [--appbar|-a] [--bottombar|-b]"
   echo "  --appbar, -a    Include AppBar in the page (default: true)"
   echo "  --bottombar, -b Include BottomBar in the page (default: true)"
+  echo "  --no-appbar, --no-a Do not include AppBar in the page",
+  echo "  --no-bottombar, --no-b Do not include BottomBar in the page"
   exit 1
 }
 

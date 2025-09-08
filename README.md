@@ -136,12 +136,19 @@ fvm flutter run
 chmod +x create_feature.sh
 
 
- ./create_feature.sh
 Usage: ./create_feature.sh <feature_name> [--appbar|-a] [--bottombar|-b]
   --appbar, -a    Include AppBar in the page (default: true)
   --bottombar, -b Include BottomBar in the page (default: true)
+  --no-appbar, --no-a Do not include AppBar in the page,
+  --no-bottombar, --no-b Do not include BottomBar in the page
 
 # ex: ./create_feature.sh home
+
+// only appbar
+# ex: ./create_feature.sh home --appbar --no-bottombar
+
+// only bottombar
+# ex: ./create_feature.sh home --no-appbar --bottombar
 ```
 
 ```
