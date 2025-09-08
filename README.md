@@ -145,10 +145,10 @@ Usage: ./create_feature.sh <feature_name> [--appbar|-a] [--bottombar|-b]
 # ex: ./create_feature.sh home
 
 // only appbar
-# ex: ./create_feature.sh home --appbar --no-bottombar
+# ex: ./create_feature.sh home --appbar
 
 // only bottombar
-# ex: ./create_feature.sh home --no-appbar --bottombar
+# ex: ./create_feature.sh home --bottombar
 ```
 
 ```

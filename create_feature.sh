@@ -30,12 +30,14 @@ while [ $# -gt 0 ]; do
   case "$1" in
     --appbar|-a)
       INCLUDE_APPBAR=true
+      INCLUDE_BOTTOMBAR=false
       ;;
     --no-appbar|--no-a)
       INCLUDE_APPBAR=false
       ;;
     --bottombar|-b)
       INCLUDE_BOTTOMBAR=true
+      INCLUDE_APPBAR=false
       ;;
     --no-bottombar|--no-b)
       INCLUDE_BOTTOMBAR=false
