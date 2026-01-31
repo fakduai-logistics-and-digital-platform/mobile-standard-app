@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app_standard/i18n/i18n.dart';
 import 'package:mobile_app_standard/router/router.dart';
-import 'package:mobile_app_standard/shared/styles/p_colors.dart';
-import 'package:mobile_app_standard/shared/widgets/appbar/language_dropdown.dart';
+import 'package:mobile_app_standard/shared/tokens/p_colors.dart';
+import 'package:mobile_app_standard/shared/components/appbar/language_dropdown.dart';
 
 class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
   final String currentRouteName;

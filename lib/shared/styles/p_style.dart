@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app_standard/shared/styles/p_colors.dart';
+import 'package:mobile_app_standard/shared/tokens/p_colors.dart';
+import 'package:mobile_app_standard/shared/tokens/p_elevation.dart';
+import 'package:mobile_app_standard/shared/tokens/p_radius.dart';
 
 class PStyle {
   static ButtonStyle get btnPrimary {
@@ -7,9 +9,9 @@ class PStyle {
       backgroundColor: PColor.primaryColor,
       foregroundColor: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(PRadius.sm),
       ),
-      elevation: 0.0,
+      elevation: PElevation.none,
     );
   }
 
@@ -18,9 +20,9 @@ class PStyle {
       backgroundColor: Colors.white,
       foregroundColor: PColor.contentColor,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(PRadius.sm),
       ),
-      elevation: 0.0,
+      elevation: PElevation.none,
     );
   }
 }

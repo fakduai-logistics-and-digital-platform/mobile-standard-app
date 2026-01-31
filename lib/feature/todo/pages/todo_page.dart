@@ -6,10 +6,11 @@ import 'package:mobile_app_standard/feature/todo/bloc/todo_bloc.dart';
 import 'package:mobile_app_standard/feature/todo/model/todo_model.dart';
 import 'package:mobile_app_standard/feature/todo/widgets/dialog/add_todo_dialog.dart';
 import 'package:mobile_app_standard/i18n/i18n.dart';
-import 'package:mobile_app_standard/shared/styles/p_colors.dart';
-import 'package:mobile_app_standard/shared/styles/p_size.dart';
-import 'package:mobile_app_standard/shared/widgets/appbar/appbar_custom.dart';
-import 'package:mobile_app_standard/shared/widgets/appbar/bottombar_custom.dart';
+import 'package:mobile_app_standard/shared/tokens/p_colors.dart';
+import 'package:mobile_app_standard/shared/tokens/p_size.dart';
+import 'package:mobile_app_standard/shared/tokens/p_spacing.dart';
+import 'package:mobile_app_standard/shared/components/appbar/appbar_custom.dart';
+import 'package:mobile_app_standard/shared/components/appbar/bottombar_custom.dart';
 
 @RoutePage()
 class TodoPage extends HookWidget {
@@ -39,14 +40,14 @@ class TodoPage extends HookWidget {
       bottomNavigationBar: BottomBarCustom(currentRouteName: currentRouteName),
       backgroundColor: PColor.backgroundColor,
       body: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(PSpacing.lg),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Icon(Icons.list_alt_outlined, color: PColor.primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: PSpacing.sm),
                 Text(msg.title_todo, style: TextStyle(fontSize: PText.textXl)),
               ],
             ),
@@ -79,9 +80,9 @@ class TodoPage extends HookWidget {
                       if (index == limitedItems.length) {
                         return items.length > displayedItems.value
                             ? const Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(16.0),
-                                  child: CircularProgressIndicator(),
+                                child: const Padding(
+                                  padding: const EdgeInsets.all(PSpacing.lg),
+                                  child: const CircularProgressIndicator(),
                                 ),
                               )
                             : const SizedBox.shrink();

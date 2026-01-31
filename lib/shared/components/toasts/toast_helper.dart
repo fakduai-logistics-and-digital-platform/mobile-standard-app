@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app_standard/shared/styles/p_colors.dart';
+import 'package:mobile_app_standard/shared/tokens/p_colors.dart';
+import 'package:mobile_app_standard/shared/tokens/p_radius.dart';
+import 'package:mobile_app_standard/shared/tokens/p_spacing.dart';
 import 'package:toastification/toastification.dart';
 
 void showErrorToast({
@@ -21,9 +23,9 @@ void showErrorToast({
       closeOnClick: true,
       backgroundColor: Colors.white,
       foregroundColor: Colors.black,
-      padding: EdgeInsets.all(16),
-      margin: EdgeInsets.all(20),
-      borderRadius: BorderRadius.circular(10),
+      padding: EdgeInsets.all(PSpacing.lg),
+      margin: EdgeInsets.all(PSpacing.xl),
+      borderRadius: BorderRadius.circular(PRadius.md),
       progressBarTheme: ProgressIndicatorThemeData(
         color: PColor.errorColor,
         linearTrackColor: Colors.redAccent.withValues(alpha: 0.3),
@@ -49,9 +51,9 @@ void showSuccessToast({
       closeOnClick: true,
       backgroundColor: Colors.white,
       foregroundColor: Colors.black,
-      padding: EdgeInsets.all(16),
-      margin: EdgeInsets.all(20),
-      borderRadius: BorderRadius.circular(10),
+      padding: EdgeInsets.all(PSpacing.lg),
+      margin: EdgeInsets.all(PSpacing.xl),
+      borderRadius: BorderRadius.circular(PRadius.md),
       progressBarTheme: ProgressIndicatorThemeData(
         color: PColor.primaryColor,
       ));

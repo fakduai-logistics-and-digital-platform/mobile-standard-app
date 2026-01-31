@@ -8,7 +8,7 @@ import 'package:mobile_app_standard/locator.dart';
 import 'package:mobile_app_standard/router/router.dart';
 import 'package:mobile_app_standard/shared/bloc/language/language_bloc.dart';
 import 'package:mobile_app_standard/shared/bloc/language/language_state.dart';
-import 'package:mobile_app_standard/shared/styles/p_colors.dart';
+import 'package:mobile_app_standard/shared/tokens/p_colors.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

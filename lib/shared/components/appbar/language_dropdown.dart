@@ -4,7 +4,10 @@ import 'package:mobile_app_standard/shared/bloc/language/language_bloc.dart';
 import 'package:mobile_app_standard/shared/bloc/language/language_event.dart';
 import 'package:mobile_app_standard/shared/bloc/language/language_state.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:mobile_app_standard/shared/styles/p_colors.dart';
+import 'package:mobile_app_standard/shared/tokens/p_colors.dart';
+import 'package:mobile_app_standard/shared/tokens/p_radius.dart';
+import 'package:mobile_app_standard/shared/tokens/p_shadow.dart';
+import 'package:mobile_app_standard/shared/tokens/p_spacing.dart';
 
 class LanguageDropdown extends StatelessWidget {
   final BuildContext context;
@@ -20,7 +23,7 @@ class LanguageDropdown extends StatelessWidget {
             customButton: Container(
               height: 40,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(PRadius.md),
               ),
               child: IconButton(
                 onPressed: null,
@@ -69,18 +72,11 @@ class LanguageDropdown extends StatelessWidget {
             },
             dropdownStyleData: DropdownStyleData(
               width: 100,
-              padding: const EdgeInsets.symmetric(vertical: 6),
+              padding: EdgeInsets.symmetric(vertical: PSpacing.xs),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(PRadius.xs),
                   color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withAlpha(50),
-                      spreadRadius: 2,
-                      blurRadius: 4,
-                      offset: const Offset(0, 2),
-                    ),
-                  ]),
+                  boxShadow: PShadow.dropdown),
               offset: const Offset(-8, -8),
             ),
           ),

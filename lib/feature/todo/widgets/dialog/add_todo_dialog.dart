@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_app_standard/feature/todo/bloc/todo_bloc.dart';
 import 'package:mobile_app_standard/i18n/i18n.dart';
-import 'package:mobile_app_standard/shared/styles/p_colors.dart';
-import 'package:mobile_app_standard/shared/styles/p_size.dart';
+import 'package:mobile_app_standard/shared/tokens/p_colors.dart';
+import 'package:mobile_app_standard/shared/tokens/p_size.dart';
 import 'package:mobile_app_standard/shared/styles/p_style.dart';
-import 'package:mobile_app_standard/shared/widgets/toasts/toast_helper.dart';
+import 'package:mobile_app_standard/shared/components/toasts/toast_helper.dart';
 
 class AddTodoDialog extends StatelessWidget {
   AddTodoDialog({super.key});
