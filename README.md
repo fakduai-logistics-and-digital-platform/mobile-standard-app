@@ -36,6 +36,37 @@ fvm flutter run
 - If you add new words to an existing `.arb` file (e.g., `general/en.arb`), just run `sh generate_all.sh` again to regenerate the affected localization file.
 - After running the script, stop the app and restart it with `fvm flutter run` to apply the changes.
 
+## Optional: Hive Local Storage
+
+This project ships with a lightweight Hive config for local storage under `lib/domain/datasource/hive_config.dart`.
+
+### Basic usage
+
+```dart
+// lib/main.dart
+import 'package:mobile_app_standard/domain/datasource/hive_config.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await HiveConfig.init(
+    // adapters: [YourAdapter()],
+  );
+  runApp(const MyApp());
+}
+```
+
+```dart
+import 'package:mobile_app_standard/domain/datasource/hive_config.dart';
+
+final box = await HiveConfig.openBox<String>('cache_box');
+await box.put('key', 'value');
+final value = box.get('key');
+```
+
+### With TypeAdapter (optional)
+
+Register adapters via `HiveConfig.init(adapters: [...])` and then open boxes as usual.
+
 ## Project Structure
 
 ```bash
@@ -44,8 +75,9 @@ fvm flutter run
 │   └── config.dart                # Basic configuration file for the app
 ├── domain
 │   ├── datasource
-│   │   ├── app_database.dart      # File defining the main database structure of the app
-│   │   └── app_database.g.dart    # Auto-generated file from app_database.dart (generated)
+│   │   ├── app_datebase.dart      # File defining the main database structure of the app (Drift)
+│   │   ├── app_datebase.g.dart    # Auto-generated file from app_datebase.dart (generated)
+│   │   └── hive_config.dart       # Optional Hive configuration for local storage
 │   ├── http_client
 │   │   ├── ip.dart                # File managing connections via IP or HTTP client
 │   │   └── websocket.dart         # File managing WebSocket connections
@@ -97,18 +129,24 @@ fvm flutter run
     │       ├── language_bloc.dart    # BLoC for managing language switching
     │       ├── language_event.dart   # Events occurring in the language system
     │       └── language_state.dart   # States of the language system
+    ├── components
+    │   ├── appbar
+    │   │   ├── appbar_custom.dart       # Custom AppBar widget
+    │   │   └── language_dropdown.dart   # Dropdown widget for language selection
+    │   └── toasts
+    │       └── toast_helper.dart        # Utility file for managing Toast alerts
     ├── styles
-    │   ├── p_colors.dart             # File defining colors used in the app
-    │   ├── p_size.dart               # File defining sizes used in the app (e.g., font sizes)
-    │   └── p_style.dart              # File defining styles used in the app (e.g., TextStyle)
+    │   └── p_style.dart                 # File defining styles used in the app (e.g., TextStyle)
+    ├── tokens
+    │   ├── p_colors.dart                # Color tokens
+    │   ├── p_size.dart                  # Typography size tokens
+    │   ├── p_spacing.dart               # Spacing tokens
+    │   ├── p_radius.dart                # Radius tokens
+    │   ├── p_shadow.dart                # Shadow tokens
+    │   ├── p_elevation.dart             # Elevation tokens
+    │   └── p_duration.dart              # Duration tokens
     ├── utils
     │   └── debouncer.dart            # Utility file for managing time delays (debounce)
-    └── widgets
-        ├── appbar
-        │   ├── appbar_custom.dart       # Custom AppBar widget
-        │   └── language_dropdown.dart   # Dropdown widget for language selection
-        └── toasts
-            └── toast_helper.dart         # Utility file for managing Toast alerts
 ```
 
 ## Best Practices

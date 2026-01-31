@@ -54,5 +54,8 @@ android/fastlane/report.xml
 android/fastlane/build/.last_build_id
 
 # Claude
-./claude
-
+.claude/*
+.shared/*
+.claude/*
+.agent/*
+.codex/*
