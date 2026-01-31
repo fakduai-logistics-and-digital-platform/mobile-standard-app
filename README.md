@@ -160,6 +160,64 @@ lib/feature/home
 └── widgets
 ```
 
+### Install Fastlane
+
+**Fastlane** เป็นเครื่องมือที่ใช้สำหรับ automate การ build, test, และ deploy app ทั้ง iOS และ Android
+
+#### macOS / Linux
+
+ติดตั้งผ่าน Homebrew (แนะนำ):
+
+```bash
+brew install fastlane
+```
+
+หรือติดตั้งผ่าน RubyGems:
+
+```bash
+sudo gem install fastlane -NV
+```
+
+#### ตรวจสอบการติดตั้ง
+
+```bash
+fastlane --version
+```
+
+#### เริ่มต้นใช้งาน Fastlane
+
+สำหรับ Android:
+
+```bash
+cd android
+fastlane init
+```
+
+สำหรับ iOS:
+
+```bash
+cd ios
+fastlane init
+```
+
+#### ใช้งาน Fastlane ผ่าน Bundle (แนะนำสำหรับโปรเจกต์)
+
+หากโปรเจกต์มี `Gemfile` อยู่แล้ว ให้ใช้:
+
+```bash
+# ติดตั้ง dependencies
+bundle install
+
+# รัน fastlane ผ่าน bundle
+bundle exec fastlane [lane_name]
+```
+
+**ข้อดีของการใช้ Bundle:**
+- ทำให้ทุกคนในทีมใช้ fastlane เวอร์ชันเดียวกัน
+- ป้องกันปัญหา dependency conflicts
+
+---
+
 ### Build APK
 
 ```bash
@@ -192,7 +250,7 @@ chmod +x build_apk_prod.sh
 ### Export Database
 
 ```bash
-adb exec-out run-as com.example.mobile_app cat /data/data/com.example.mobile_app.dev/app_flutter/my_database.sqlite > my_database.sqlite
+adb exec-out run-as com.fldp.mobile_app cat /data/data/com.fldp.mobile_app.dev/app_flutter/my_database.sqlite > my_database.sqlite
 ```
 
 ### More
@@ -251,3 +309,72 @@ open ios/Runner.xcworkspace
 - มี **Apple Developer Program (แบบเสียเงิน)** สำหรับ TestFlight/App Store
 - Bundle ID ลงทะเบียนใน App Store Connect/Developer Portal
 - **Signing (Release)** ตั้ง Team & profiles ถูกตัว (ไม่ใช้ Development โปรไฟล์กับ app-store)
+
+---
+
+### iOS Upload to App Store with xcrun altool
+
+**xcrun altool** เป็นเครื่องมือที่ใช้สำหรับการอัปโหลด .ipa ไปยัง App Store Connect ผ่าน command line
+
+#### ติดตั้ง Xcode Command Line Tools
+
+xcrun altool เป็นส่วนหนึ่งของ Xcode Command Line Tools ซึ่งมีอยู่แล้วหากติดตั้ง Xcode แต่หากยังไม่มีให้รันคำสั่ง:
+
+```bash
+xcode-select --install
+```
+
+ตรวจสอบการติดตั้ง:
+
+```bash
+xcrun altool --version
+# หรือ
+xcode-select -p
+```
+
+#### การใช้งาน xcrun altool สำหรับอัปโหลด .ipa
+
+**หมายเหตุ:** xcrun altool ถูกแทนที่ด้วย **xcrun notarytool** และ **xcrun altool** จะถูกเลิกใช้ในอนาคต แนะนำให้ใช้ `notarytool` แทน
+
+##### 1. อัปโหลดด้วย altool (Legacy - Deprecated)
+
+```bash
+xcrun altool --upload-app \
+  --type ios \
+  --file "path/to/YourApp.ipa" \
+  --username "your-apple-id@example.com" \
+  --password "app-specific-password"
+```
+
+**สร้าง App-Specific Password:**
+1. ไปที่ [appleid.apple.com](https://appleid.apple.com)
+2. Sign in → Security → App-Specific Passwords
+3. Generate password และใช้ในคำสั่งด้านบน
+
+##### 2. อัปโหลดด้วย notarytool (แนะนำ)
+
+```bash
+# เก็บ credentials (ครั้งเดียว)
+xcrun notarytool store-credentials "AC_PASSWORD" \
+  --apple-id "your-apple-id@example.com" \
+  --team-id "YOUR_TEAM_ID" \
+  --password "app-specific-password"
+
+# อัปโหลด .ipa
+xcrun notarytool submit "path/to/YourApp.ipa" \
+  --keychain-profile "AC_PASSWORD" \
+  --wait
+```
+
+##### 3. อัปโหลดผ่าน Transporter App (แนะนำสำหรับ GUI)
+
+- ดาวน์โหลด [Transporter](https://apps.apple.com/app/transporter/id1450874784) จาก Mac App Store
+- ลาก .ipa file เข้าไปในแอป
+- ตรวจสอบและกด "Deliver"
+
+#### เช็กสถานะการอัปโหลด
+
+```bash
+xcrun notarytool log <submission-id> \
+  --keychain-profile "AC_PASSWORD"
+```

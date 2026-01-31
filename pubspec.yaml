@@ -6,15 +6,15 @@ flavors:
     dev:
       app:
         name: "mobile_app_standard Dev"
-        identifier: com.example.mobile_app.dev
+        identifier: com.fldp.mobile_app.dev
       android:
-        applicationId: com.example.mobile_app.dev
+        applicationId: com.fldp.mobile_app.dev
     prod:
       app:
         name: "mobile_app_standard"
-        identifier: com.example.mobile_app
+        identifier: com.fldp.mobile_app
       android:
-        applicationId: com.example.mobile_app
+        applicationId: com.fldp.mobile_app
 
 version: 1.0.0+1
 

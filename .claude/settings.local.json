@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__dart__list_devices",
+      "Bash(/Users/watchakorn.b/fvm/versions/3.38.9/bin/flutter:*)"
+    ]
+  }
+}

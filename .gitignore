@@ -48,3 +48,11 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
+
+# Fastlane
+android/fastlane/report.xml
+android/fastlane/build/.last_build_id
+
+# Claude
+./claude
+
