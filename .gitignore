@@ -59,3 +59,5 @@ android/fastlane/build/.last_build_id
 .claude/*
 .agent/*
 .codex/*
+.claude/settings.local.json
+.claude/settings.local.json

@@ -8,6 +8,15 @@ project 'Runner', {
   'Debug' => :debug,
   'Profile' => :release,
   'Release' => :release,
+  'local-Debug' => :debug,
+  'local-Profile' => :release,
+  'local-Release' => :release,
+  'dev-Debug' => :debug,
+  'dev-Profile' => :release,
+  'dev-Release' => :release,
+  'prod-Debug' => :debug,
+  'prod-Profile' => :release,
+  'prod-Release' => :release,
 }
 
 def flutter_root
@@ -39,5 +48,14 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+
+    # Fix sqlite3 macro conflicts with Darwin headers
+    if target.name == 'sqlite3'
+      target.build_configurations.each do |config|
+        # Suppress ambiguous macro warnings
+        config.build_settings['OTHER_CFLAGS'] ||= ['$(inherited)']
+        config.build_settings['OTHER_CFLAGS'] << '-Wno-ambiguous-macro'
+      end
+    end
   end
 end

@@ -288,7 +288,7 @@ chmod +x build_apk_prod.sh
 ### Export Database
 
 ```bash
-adb exec-out run-as com.fldp.mobile_app cat /data/data/com.fldp.mobile_app.dev/app_flutter/my_database.sqlite > my_database.sqlite
+adb exec-out run-as com.fldp.mobileApp cat /data/data/com.fldp.mobileApp.dev/app_flutter/my_database.sqlite > my_database.sqlite
 ```
 
 ### More

@@ -1,4 +1,4 @@
-package com.fldp.mobile_app_standard
+package com.fldp.mobileApp_standard
 
 import io.flutter.embedding.android.FlutterActivity
 
