@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -29,85 +31,211 @@ class HomePage extends HookWidget {
       isLoading.value = true;
       ipAddress.value = null;
 
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (dialogContext) => HookBuilder(
-          builder: (context) {
-            final isLoadingDialog = useState(true);
-            final ip = useState<String?>(null);
+      if (Platform.isIOS) {
+        showCupertinoDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (dialogContext) => HookBuilder(
+            builder: (context) {
+              final isLoadingDialog = useState(true);
+              final ip = useState<String?>(null);
 
-            useEffect(() {
-              Future.microtask(() async {
-                final result = await locator<IpClient>().getIp();
-                ip.value = result;
-                isLoadingDialog.value = false;
-              });
-              return null;
-            }, []);
+              useEffect(() {
+                Future.microtask(() async {
+                  final result = await locator<IpClient>().getIp();
+                  ip.value = result;
+                  isLoadingDialog.value = false;
+                });
+                return null;
+              }, []);
 
-            return AlertDialog(
-              title: const Text('IP'),
-              backgroundColor: Colors.white,
-              content: Skeletonizer(
-                enabled: isLoadingDialog.value,
-                child: Text(
-                  ip.value ?? '255.255.255.255',
-                  style: const TextStyle(fontSize: PText.textBase),
+              return CupertinoAlertDialog(
+                title: const Text('IP'),
+                content: Skeletonizer(
+                  enabled: isLoadingDialog.value,
+                  child: Text(
+                    ip.value ?? '255.255.255.255',
+                    style: const TextStyle(fontSize: PText.textBase),
+                  ),
                 ),
-              ),
-              actions: [
-                TextButton(
-                  style: PStyle.btnSecondary,
-                  onPressed: () => Navigator.of(dialogContext).pop(),
-                  child: Text(msgGeneral.close),
+                actions: [
+                  CupertinoDialogAction(
+                    onPressed: () => Navigator.of(dialogContext).pop(),
+                    child: Text(msgGeneral.close),
+                  ),
+                ],
+              );
+            },
+          ),
+        );
+      } else {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (dialogContext) => HookBuilder(
+            builder: (context) {
+              final isLoadingDialog = useState(true);
+              final ip = useState<String?>(null);
+
+              useEffect(() {
+                Future.microtask(() async {
+                  final result = await locator<IpClient>().getIp();
+                  ip.value = result;
+                  isLoadingDialog.value = false;
+                });
+                return null;
+              }, []);
+
+              return AlertDialog(
+                title: const Text('IP'),
+                backgroundColor: Colors.white,
+                content: Skeletonizer(
+                  enabled: isLoadingDialog.value,
+                  child: Text(
+                    ip.value ?? '255.255.255.255',
+                    style: const TextStyle(fontSize: PText.textBase),
+                  ),
                 ),
-              ],
-            );
-          },
-        ),
-      );
+                actions: [
+                  TextButton(
+                    style: PStyle.btnSecondary,
+                    onPressed: () => Navigator.of(dialogContext).pop(),
+                    child: Text(msgGeneral.close),
+                  ),
+                ],
+              );
+            },
+          ),
+        );
+      }
 
       final ip = await locator<IpClient>().getIp();
       isLoading.value = false;
       ipAddress.value = ip;
     }
 
+    final bodyContent = Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFFE0F7FA), // Light cyan/blue start
+            Colors.white, // White end
+          ],
+        ),
+      ),
+      child: Center(
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: PSpacing.lg),
+          padding: const EdgeInsets.all(PSpacing.xl),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.7),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 10,
+                spreadRadius: 2,
+              ),
+            ],
+            border: Border.all(color: Colors.white.withAlpha(100)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Welcome to",
+                style: const TextStyle(
+                  fontSize: PText.textLg,
+                  color: Colors.grey,
+                  decoration: TextDecoration.none,
+                ),
+              ),
+              const SizedBox(height: PSpacing.xs),
+              Text(
+                'Fakduai APP',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: PColor.primaryColor,
+                  decoration: TextDecoration.none,
+                  letterSpacing: -0.5,
+                ),
+              ),
+              const SizedBox(height: 32.0),
+              SizedBox(
+                width: double.infinity,
+                child: Platform.isIOS
+                    ? CupertinoButton(
+                        color: PColor.primaryColor,
+                        borderRadius: BorderRadius.circular(12),
+                        pressedOpacity: 0.7,
+                        onPressed: fetchIpAndShowDialog,
+                        child: isLoading.value
+                            ? const CupertinoActivityIndicator(
+                                color: Colors.white,
+                              )
+                            : Text(
+                                msg.btn_check_ip,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                      )
+                    : ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: PColor.primaryColor,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 2,
+                        ),
+                        onPressed: fetchIpAndShowDialog,
+                        child: isLoading.value
+                            ? const SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Text(msg.btn_check_ip),
+                      ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    if (Platform.isIOS) {
+      return CupertinoPageScaffold(
+        navigationBar:
+            AppBarCustom(currentRouteName: currentRouteName)
+                as ObstructingPreferredSizeWidget,
+        child: SafeArea(
+          child: Column(
+            children: [
+              Expanded(child: bodyContent),
+              BottomBarCustom(currentRouteName: currentRouteName),
+            ],
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBarCustom(currentRouteName: currentRouteName),
       bottomNavigationBar: BottomBarCustom(currentRouteName: currentRouteName),
       backgroundColor: PColor.backgroundColor,
-      body: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(PSpacing.lg),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              msg.text_welcome('Fakduai APP'),
-              style: const TextStyle(fontSize: PText.text2xl),
-            ),
-            const SizedBox(height: PSpacing.sm),
-            SizedBox(
-              width: 400,
-              child: TextButton(
-                style: PStyle.btnPrimary,
-                onPressed: fetchIpAndShowDialog,
-                child: isLoading.value
-                    ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Colors.white,
-                        ),
-                      )
-                    : Text(msg.btn_check_ip),
-              ),
-            ),
-          ],
-        ),
-      ),
+      body: bodyContent,
     );
   }
 }

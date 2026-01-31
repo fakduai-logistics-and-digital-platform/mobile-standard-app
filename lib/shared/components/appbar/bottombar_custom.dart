@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -35,6 +37,26 @@ class BottomBarCustom extends HookWidget {
     }
 
     final msg = AppLocalizations(context).appbar;
+
+    if (Platform.isIOS) {
+      return CupertinoTabBar(
+        currentIndex: selectedIndex.value,
+        onTap: onItemTapped,
+        activeColor: PColor.primaryColor,
+        inactiveColor: Colors.black,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.home),
+            label: msg.home_route_name,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.list_bullet),
+            label: msg.todo_route_name,
+          ),
+        ],
+      );
+    }
+
     return BottomNavigationBar(
       currentIndex: selectedIndex.value,
       onTap: onItemTapped,

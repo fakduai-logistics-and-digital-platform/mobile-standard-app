@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_app_standard/config/config.dart';
@@ -15,21 +17,21 @@ Future<void> main() async {
   await loadEnv();
   await initLocator();
 
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider<TodoBloc>(
-        create: (context) => locator<TodoBloc>(),
-      ),
-      BlocProvider<WebsocketBloc>(
-        create: (context) => locator<WebsocketBloc>(),
-      ),
-      BlocProvider<LanguageBloc>(
-        create: (context) => locator<LanguageBloc>(),
-      )
-      // add more providers
-    ],
-    child: MyApp(),
-  ));
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<TodoBloc>(create: (context) => locator<TodoBloc>()),
+        BlocProvider<WebsocketBloc>(
+          create: (context) => locator<WebsocketBloc>(),
+        ),
+        BlocProvider<LanguageBloc>(
+          create: (context) => locator<LanguageBloc>(),
+        ),
+        // add more providers
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -39,6 +41,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LanguageBloc, LanguageState>(
       builder: (context, languageState) {
+        if (Platform.isIOS) {
+          return CupertinoApp.router(
+            title: 'Flutter Demo',
+            supportedLocales: I18n.all,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            locale: languageState.locale,
+            theme: CupertinoThemeData(primaryColor: PColor.primaryColor),
+            routerConfig: _appRouter.config(),
+          );
+        }
         return MaterialApp.router(
           title: 'Flutter Demo',
           supportedLocales: I18n.all,
