@@ -19,7 +19,7 @@ else
     exit 1
 fi
 
-fvm use 3.35.2
+fvm use 3.38.9
 fvm flutter build apk --flavor prod
 
 BUILD_STATUS=$?

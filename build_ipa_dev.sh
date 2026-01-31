@@ -22,7 +22,7 @@ else
 fi
 
 # ใช้ FVM เลือกเวอร์ชัน Flutter
-fvm use 3.35.2
+fvm use 3.38.9
 
 # build iOS (ipa) — ไม่ใส่ flavor
 fvm flutter build ipa --release

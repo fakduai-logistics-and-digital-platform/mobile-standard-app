@@ -5,7 +5,7 @@
 # First Run Command macOs
 
 ```
-fvm use 3.35.2
+fvm use 3.38.9
 
 # Install dependencies
 fvm flutter pub get
