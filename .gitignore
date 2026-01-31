@@ -61,3 +61,4 @@ android/fastlane/build/.last_build_id
 .codex/*
 .claude/settings.local.json
 .claude/settings.local.json
+.env
